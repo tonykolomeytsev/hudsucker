@@ -162,6 +162,30 @@ impl From<&'static [u8]> for Body {
     }
 }
 
+impl From<Box<[u8]>> for Body {
+    fn from(value: Box<[u8]>) -> Self {
+        Self {
+            inner: Internal::Full(Full::new(Bytes::from(value))),
+        }
+    }
+}
+
+impl From<Vec<u8>> for Body {
+    fn from(value: Vec<u8>) -> Self {
+        Self {
+            inner: Internal::Full(Full::new(Bytes::from(value))),
+        }
+    }
+}
+
+impl From<Bytes> for Body {
+    fn from(value: Bytes) -> Self {
+        Self {
+            inner: Internal::Full(Full::new(value)),
+        }
+    }
+}
+
 impl<T> From<Request<T>> for Body
 where
     T: Into<Body>,
